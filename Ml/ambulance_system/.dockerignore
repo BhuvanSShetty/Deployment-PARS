@@ -1,0 +1,10 @@
+venv/
+__pycache__/
+*.pyc
+*.pyo
+.git
+.gitignore
+cache/
+*.html
+*.csv
+*.geojson

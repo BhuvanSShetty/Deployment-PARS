@@ -1,0 +1,159 @@
+.admin-register-page {
+    min-height: calc(100vh - 65px);
+    padding: 30px 28px 64px;
+    background: transparent; /* Inherits global warm transparent background from index.css */
+    color: var(--apple-text-primary);
+}
+
+.register-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: flex-start;
+    gap: 24px;
+    margin-bottom: 24px;
+    background: var(--apple-card);
+    border: 1px solid var(--apple-border);
+    padding: 24px 30px;
+    border-radius: 12px;
+    box-shadow: var(--apple-shadow);
+}
+
+.register-header h1 {
+    margin: 0 0 8px 0;
+    font-size: 28px;
+    font-weight: 600;
+}
+
+.register-header p {
+    margin: 0;
+    color: var(--apple-text-secondary);
+    font-size: 15px;
+}
+
+.register-form {
+    background: var(--apple-card);
+    border: 1px solid var(--apple-border);
+    border-radius: 12px;
+    padding: 32px;
+    box-shadow: var(--apple-shadow);
+    display: flex;
+    flex-direction: column;
+    gap: 24px;
+}
+
+.form-section {
+    border: 1px solid var(--apple-border);
+    border-radius: 12px;
+    padding: 24px;
+    background: var(--bg-highlight); /* Slightly tinted inner card */
+}
+
+.form-section h2 {
+    margin: 0 0 16px;
+    font-size: 16px;
+    font-family: var(--font-heading);
+    color: var(--apple-text-primary);
+    font-weight: 600;
+}
+
+.form-grid {
+    display: grid;
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+    gap: 20px;
+}
+
+.form-grid label,
+.checkbox-grid label {
+    display: flex;
+    flex-direction: column;
+    gap: 8px;
+    font-size: 13px;
+    color: var(--apple-text-secondary);
+    font-weight: 500;
+}
+
+.form-grid label.full {
+    grid-column: span 2;
+}
+
+.form-grid input,
+.form-grid select {
+    background: var(--apple-card);
+    border: 1px solid var(--apple-border);
+    color: var(--apple-text-primary);
+    padding: 12px 14px;
+    border-radius: 10px;
+    font-size: 15px;
+    font-family: var(--font-family);
+    transition: all 0.2s ease;
+}
+
+.form-grid input:focus,
+.form-grid select:focus {
+    outline: none;
+    border-color: var(--apple-blue);
+    background: var(--apple-input-bg);
+    box-shadow: 0 0 0 3px var(--bg-focus);
+}
+
+.checkbox-grid {
+    margin-top: 16px;
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(160px, 1fr));
+    gap: 12px;
+}
+
+.checkbox-grid input {
+    margin-right: 8px;
+    accent-color: var(--apple-blue);
+    width: 16px;
+    height: 16px;
+}
+
+.register-alert {
+    padding: 16px;
+    border-radius: 12px;
+    font-size: 15px;
+    font-weight: 500;
+}
+
+.register-alert.success {
+    background: var(--bg-success);
+    color: var(--apple-green);
+    border: 1px solid rgba(55, 81, 77, 0.2);
+}
+
+.register-alert.error {
+    background: var(--bg-error);
+    color: var(--apple-red);
+    border: 1px solid rgba(182, 89, 76, 0.2);
+}
+
+.submit-btn {
+    align-self: flex-start;
+    padding: 14px 24px;
+    border: none;
+    border-radius: 12px;
+    background: var(--apple-blue);
+    color: white;
+    font-weight: 600;
+    font-size: 16px;
+    cursor: pointer;
+    transition: all 0.2s cubic-bezier(0.25, 1, 0.5, 1);
+}
+
+.submit-btn:hover {
+    background: var(--apple-blue-hover);
+    transform: translateY(-2px);
+    box-shadow: 0 6px 16px var(--bg-focus);
+}
+
+@media (max-width: 900px) {
+    .form-grid {
+        grid-template-columns: 1fr;
+    }
+
+    .form-grid label.full {
+        grid-column: span 1;
+    }
+}

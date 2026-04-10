@@ -1,0 +1,128 @@
+:root {
+  /* Earthy "Human-Made" Palette */
+  --color-knit-sweater: #EEE6DE;
+  --color-midnight: #37514D;
+  --color-steel-blue: #90AEB2;
+  --color-cranberry: #B6594C;
+  --color-ceramic-mug: #DDBE75;
+  --color-camel-coat: #BE845E;
+
+  /* Mapping to existing variables to maintain layout mechanics */
+  --apple-bg: var(--color-knit-sweater);
+  --apple-bg-gradient: none;
+  --apple-card: #FAF9F6; /* Warm off-white */
+  --apple-card-hover: #FFFFFF;
+  
+  --apple-text-primary: var(--color-midnight);
+  --apple-text-secondary: #5a7571; /* Lighter shade of midnight */
+  --apple-text-muted: #889e9a;
+  
+  --apple-blue: var(--color-steel-blue);     /* Soft primary actions */
+  --apple-blue-hover: #7b999d;
+  
+  --apple-red: var(--color-cranberry);       /* Errors / Critical */
+  --apple-orange: var(--color-camel-coat);   /* Warnings */
+  --apple-green: var(--color-midnight);      /* Deep organic green for success */
+  --apple-yellow: var(--color-ceramic-mug);
+  
+  /* Semantic Tinted Backgrounds for Badges & Highlights */
+  --bg-highlight: rgba(55, 81, 77, 0.08);
+  --bg-error: rgba(182, 89, 76, 0.15);     /* Cranberry tinted */
+  --bg-warning: rgba(221, 190, 117, 0.15); /* Ceramic Mug tinted */
+  --bg-success: rgba(55, 81, 77, 0.12);    /* Midnight tinted */
+  --bg-info: rgba(144, 174, 178, 0.15);    /* Steel Blue tinted */
+  --bg-focus: rgba(144, 174, 178, 0.25);   /* Focus ring tint */
+  
+  --apple-border: rgba(55, 81, 77, 0.18);    /* Slightly bolder borders for visibility */
+  --apple-border-hover: rgba(55, 81, 77, 0.35); /* Crisp border on hover */
+  --apple-input-bg: #FFFFFF;
+  
+  --apple-shadow: 0 4px 20px rgba(55, 81, 77, 0.05); /* Soft baseline shadow */
+  --apple-shadow-hover: 0 16px 40px rgba(55, 81, 77, 0.18); /* Much stronger, floating deep shadow for hover visibility */
+  
+  /* Fonts */
+  --font-family: -apple-system, BlinkMacSystemFont, "Inter", "Segoe UI", sans-serif;
+  --font-heading: "Georgia", serif;
+}
+
+body {
+  margin: 0;
+  font-family: var(--font-family);
+  background-color: var(--apple-bg);
+  background-image: url('./assets/bg.png');
+  background-attachment: fixed;
+  background-size: 150vw 150vh;
+  animation: livingBackgroundPan 30s linear infinite alternate;
+  color: var(--apple-text-primary);
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+  line-height: 1.6;
+}
+
+@keyframes livingBackgroundPan {
+  0% { background-position: 0% 0%; }
+  100% { background-position: 100% 100%; }
+}
+
+h1, h2, h3, h4, h5, h6 {
+  font-family: var(--font-heading);
+  color: var(--apple-text-primary);
+  margin-top: 0;
+  font-weight: 600;
+}
+
+a {
+  color: var(--apple-blue);
+  text-decoration: none;
+  transition: color 0.2s ease;
+}
+
+a:hover {
+  color: var(--apple-blue-hover);
+}
+
+::-webkit-scrollbar {
+  width: 8px;
+  height: 8px;
+}
+::-webkit-scrollbar-track {
+  background: transparent;
+}
+::-webkit-scrollbar-thumb {
+  background: rgba(55, 81, 77, 0.2);
+  border-radius: 4px;
+}
+::-webkit-scrollbar-thumb:hover {
+  background: rgba(55, 81, 77, 0.3);
+}
+
+button {
+  font-family: var(--font-family);
+  transition: all 0.2s ease;
+}
+button:hover {
+  filter: brightness(1.03);
+}
+button:active {
+  transform: scale(0.97);
+}
+
+/* Shared card base */
+.glass-effect, 
+.home-card, .ambulance-header, .vitals-form, .detail-group, .location-info,
+.hospital-header, .controls, .patient-card, .prealert-section,
+.admin-header, .admin-nav, .stat-card, .recent-activity, .patients-section, .ambulances-section, .user-card, .ambulance-card,
+.dispatcher-header, .dispatch-summary div, .dispatch-card,
+.hero-card, .caller-form-wrapper {
+  background: var(--apple-card);
+  border: 1px solid var(--apple-border);
+  box-shadow: var(--apple-shadow);
+  border-radius: 16px;
+  transition: box-shadow 0.3s ease, transform 0.3s ease;
+}
+
+.home-card:hover, .stat-card:hover, .dispatch-card:hover, .user-card:hover, .ambulance-card:hover, .patient-card:hover {
+  border-color: rgba(144, 174, 178, 0.4);
+  box-shadow: var(--apple-shadow-hover);
+  transform: translateY(-3px);
+}

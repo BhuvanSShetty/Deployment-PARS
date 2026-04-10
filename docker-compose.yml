@@ -1,0 +1,80 @@
+services:
+
+  # ─── Core Backend (Node.js / Express) ──────────────────────────────────────
+  backend:
+    build:
+      context: ./Backend
+    ports:
+      - "5050:5050"
+    volumes:
+      - ./Backend:/app
+      - /app/node_modules
+    env_file:
+      - ./Backend/.env
+    depends_on:
+      ml-api:
+        condition: service_healthy
+    restart: always
+
+  # ─── Frontend (React + Vite dev server) ────────────────────────────────────
+  frontend:
+    build:
+      context: ./Frontend
+    ports:
+      - "5173:5173"
+    volumes:
+      - ./Frontend:/app
+      - /app/node_modules
+    depends_on:
+      - backend
+    restart: always
+
+  # ─── ML Risk-Scoring API (FastAPI + XGBoost) ───────────────────────────────
+  #     Always running; Backend calls POST /predict for real-time risk scores.
+  ml-api:
+    build:
+      context: ./Ml
+      dockerfile: Dockerfile
+    ports:
+      - "8000:8000"
+    volumes:
+      - ./Ml:/app           # hot-reload during development
+    environment:
+      - MODEL_PATH=/app/models/risk_model.pkl
+    healthcheck:
+      test: ["CMD", "curl", "-f", "http://localhost:8000/health"]
+      interval: 15s
+      timeout: 5s
+      retries: 5
+      start_period: 10s
+    restart: always
+
+  # ─── ML Simulation Runner (OSMnx / Folium / GeoPandas) ────────────────────
+  #     One-shot tool — not kept running.
+  #     Run with:  docker compose run --rm ml-sim
+  #
+  #     What it does:
+  #       1. Generates synthetic risk-weighted emergency data (agent_data)
+  #       2. Runs weighted K-Means + gap-fill hub placement (agent_math)
+  #       3. Calculates traffic-adjusted isochrones via OSMnx (agent_gis)
+  #       4. Renders an interactive Folium map (agent_ui)
+  #       5. Writes the HTML file directly to Frontend/public/ so the
+  #          Dispatcher dashboard picks it up immediately.
+  ml-sim:
+    build:
+      context: ./Ml/ambulance_system
+      dockerfile: Dockerfile
+    volumes:
+      - ./Ml/ambulance_system:/app          # source code hot-reload
+      - osmnx-cache:/app/cache              # persist OSM road graph downloads
+      - ./Frontend/public:/app/output       # write map where Vite/nginx can serve it
+    environment:
+      - OUTPUT_PATH=/app/output/ambulance_map.html
+      - OSMNX_CACHE_DIR=/app/cache
+    # No restart – it exits after the simulation completes
+    profiles: ["tools"]
+
+# ─── Named volumes ────────────────────────────────────────────────────────────
+volumes:
+  osmnx-cache:
+    driver: local

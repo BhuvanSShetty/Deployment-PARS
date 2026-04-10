@@ -1,0 +1,154 @@
+.landing-page {
+    min-height: 100vh;
+    display: flex;
+    flex-direction: column;
+    padding: 8vh 40px 60px; /* Safe breathable padding from top */
+    max-width: 1200px;
+    margin: 0 auto;
+    justify-content: flex-start; /* Prevents center clipping on small screens */
+}
+
+.landing-header {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: 60px;
+    padding: 60px 0;
+}
+
+.landing-text {
+    flex: 1.2;
+}
+
+.landing-text h1 {
+    font-size: 64px;
+    font-weight: 700;
+    margin: 0 0 24px 0;
+    line-height: 1.05;
+    letter-spacing: -2px;
+}
+
+.landing-text p {
+    font-size: 19px;
+    color: var(--apple-text-secondary);
+    margin-bottom: 40px;
+    max-width: 500px;
+    line-height: 1.6;
+    font-weight: 400;
+}
+
+.get-started-btn {
+    padding: 16px 36px;
+    font-size: 16px;
+    font-weight: 600;
+    background: #37514D;
+    color: white;
+    border: none;
+    border-radius: 14px;
+    cursor: pointer;
+    box-shadow: 0 4px 16px rgba(55, 81, 77, 0.2);
+    transition: all 0.25s ease;
+}
+
+.get-started-btn:hover {
+    background: #90AEB2;
+    transform: translateY(-2px);
+    box-shadow: 0 8px 24px rgba(144, 174, 178, 0.35);
+}
+
+.landing-image-container {
+    flex: 1;
+    display: flex;
+    justify-content: flex-end;
+    position: relative;
+}
+
+.floating-ambulance {
+    max-width: 100%;
+    height: auto;
+    border-radius: 30px;
+    animation: gentleFloat 8s ease-in-out infinite alternate;
+    box-shadow: 0 24px 60px rgba(55, 81, 77, 0.2);
+    border: 2px solid rgba(255, 255, 255, 0.5);
+}
+
+@keyframes gentleFloat {
+    0% { transform: translateY(0px); }
+    100% { transform: translateY(-12px); }
+}
+
+.landing-grid {
+    display: grid;
+    grid-template-columns: repeat(2, 1fr);
+    gap: 40px;
+    padding-bottom: 60px;
+}
+
+.landing-card.glass-effect {
+    padding: 36px;
+    display: flex;
+    flex-direction: column;
+    gap: 14px;
+}
+
+.card-icon {
+    width: 56px;
+    height: 56px;
+    display: grid;
+    place-items: center;
+    border-radius: 16px;
+    margin-bottom: 8px;
+    flex-shrink: 0;
+}
+
+.card-icon svg {
+    display: block;
+    margin: auto;
+}
+
+.warning-icon {
+    background: var(--bg-warning);
+    color: var(--apple-orange);
+    border: 1px solid rgba(221, 190, 117, 0.3);
+}
+
+.success-icon {
+    background: var(--bg-success);
+    color: var(--apple-green);
+    border: 1px solid rgba(55, 81, 77, 0.2);
+}
+
+.landing-card h2 {
+    margin: 0;
+    font-size: 24px;
+}
+
+.landing-card p {
+    margin: 0;
+    color: var(--apple-text-secondary);
+    font-size: 15px;
+    line-height: 1.7;
+}
+
+@media (max-width: 900px) {
+    .landing-header {
+        flex-direction: column-reverse;
+        text-align: center;
+        padding: 40px 0;
+    }
+    
+    .landing-text p {
+        margin: 0 auto 30px auto;
+    }
+    
+    .landing-grid {
+        grid-template-columns: 1fr;
+    }
+    
+    .landing-image-container {
+        justify-content: center;
+        width: 100%;
+        max-width: 400px;
+        margin: 0 auto;
+    }
+}
