@@ -3,6 +3,8 @@ import { Link } from 'react-router-dom';
 import { getCurrentLocation } from '../utils/locationUtils.js';
 import '../styles/CallerPage.css';
 
+const API_BASE_URL = import.meta.env.VITE_API_BASE_URL || 'http://localhost:5050';
+
 const CallerPage = () => {
 	const [formData, setFormData] = useState({
 		patientName: '',
@@ -53,7 +55,7 @@ const CallerPage = () => {
 		}
 
 		try {
-			const response = await fetch('http://localhost:5050/api/calls', {
+			const response = await fetch(`${API_BASE_URL}/api/calls`, {
 				method: 'POST',
 				headers: { 'Content-Type': 'application/json' },
 				body: JSON.stringify({

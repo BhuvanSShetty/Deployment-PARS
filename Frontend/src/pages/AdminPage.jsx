@@ -2,6 +2,8 @@ import { useState, useEffect } from 'react';
 import { useTranslation } from 'react-i18next';
 import '../styles/AdminPage.css';
 
+const API_BASE_URL = import.meta.env.VITE_API_BASE_URL || 'http://localhost:5050';
+
 const AdminPage = () => {
     const { t } = useTranslation();
     const [stats, setStats] = useState({
@@ -47,7 +49,7 @@ const AdminPage = () => {
     const fetchStats = async (token) => {
         try {
             setLoading(true);
-            const response = await fetch('http://localhost:5050/api/admin/stats', {
+            const response = await fetch(`${API_BASE_URL}/api/admin/stats`, {
                 headers: {
                     'Authorization': `Bearer ${token}`
                 }
@@ -83,7 +85,7 @@ const AdminPage = () => {
 
     const fetchPatients = async (token) => {
         try {
-            const response = await fetch('http://localhost:5050/api/admin/patients', {
+            const response = await fetch(`${API_BASE_URL}/api/admin/patients`, {
                 headers: {
                     'Authorization': `Bearer ${token}`
                 }
@@ -102,7 +104,7 @@ const AdminPage = () => {
 
     const fetchAmbulances = async (token) => {
         try {
-            const response = await fetch('http://localhost:5050/api/admin/ambulances', {
+            const response = await fetch(`${API_BASE_URL}/api/admin/ambulances`, {
                 headers: {
                     'Authorization': `Bearer ${token}`
                 }
@@ -121,7 +123,7 @@ const AdminPage = () => {
 
     const fetchHospitals = async (token) => {
         try {
-            const response = await fetch('http://localhost:5050/api/admin/hospitals', {
+            const response = await fetch(`${API_BASE_URL}/api/admin/hospitals`, {
                 headers: {
                     'Authorization': `Bearer ${token}`
                 }
@@ -154,7 +156,7 @@ const AdminPage = () => {
 
         try {
             const token = localStorage.getItem('token');
-            const response = await fetch(`http://localhost:5050/api/patients/${patientId}`, {
+            const response = await fetch(`${API_BASE_URL}/api/patients/${patientId}`, {
                 method: 'DELETE',
                 headers: {
                     'Authorization': `Bearer ${token}`

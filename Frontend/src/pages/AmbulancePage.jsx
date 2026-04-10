@@ -5,6 +5,9 @@ import io from 'socket.io-client';
 import { watchLocation, stopWatchingLocation, getCurrentLocation } from '../utils/locationUtils.js';
 import '../styles/AmbulancePage.css';
 
+const API_BASE_URL = import.meta.env.VITE_API_BASE_URL || 'http://localhost:5050';
+const SOCKET_URL = import.meta.env.VITE_SOCKET_URL || API_BASE_URL;
+
 const AmbulancePage = () => {
     const { t } = useTranslation();
     const [socket, setSocket] = useState(null);
@@ -45,7 +48,7 @@ const AmbulancePage = () => {
                 const token = localStorage.getItem('token');
 
                 if (user.ambulanceId) {
-                    const res = await fetch(`http://localhost:5050/api/ambulances/${user.ambulanceId}`, {
+                    const res = await fetch(`${API_BASE_URL}/api/ambulances/${user.ambulanceId}`, {
                         headers: { 'Authorization': `Bearer ${token}` }
                     });
                     if (res.ok) {
@@ -56,7 +59,7 @@ const AmbulancePage = () => {
 
                     }
                 } else {
-                    const response = await fetch('http://localhost:5050/api/ambulances/available');
+                    const response = await fetch(`${API_BASE_URL}/api/ambulances/available`);
                     if (response.ok) {
                         const data = await response.json();
                         setAmbulances(data);
@@ -69,7 +72,7 @@ const AmbulancePage = () => {
 
         fetchAmbulances();
 
-        const newSocket = io('http://localhost:5050', {
+        const newSocket = io(SOCKET_URL, {
             reconnection: true,
             reconnectionDelay: 1000,
             reconnectionDelayMax: 5000,
@@ -117,7 +120,7 @@ const AmbulancePage = () => {
             try {
                 const token = localStorage.getItem('token');
                 const response = await fetch(
-                    `http://localhost:5050/api/dispatch/ambulances/${selectedAmbulance}/active`,
+                    `${API_BASE_URL}/api/dispatch/ambulances/${selectedAmbulance}/active`,
                     {
                         headers: { 'Authorization': `Bearer ${token}` }
                     }
@@ -178,7 +181,7 @@ const AmbulancePage = () => {
 
                 if (selectedAmbulance) {
                     const token = localStorage.getItem('token');
-                    fetch(`http://localhost:5050/api/ambulances/${selectedAmbulance}/location`, {
+                    fetch(`${API_BASE_URL}/api/ambulances/${selectedAmbulance}/location`, {
                         method: 'PATCH',
                         headers: {
                             'Content-Type': 'application/json',
@@ -244,7 +247,7 @@ const AmbulancePage = () => {
         }
 
         try {
-            const response = await fetch('http://localhost:5050/api/patients/vitals', {
+            const response = await fetch(`${API_BASE_URL}/api/patients/vitals`, {
                 method: 'POST',
                 headers: {
                     'Content-Type': 'application/json'
@@ -280,7 +283,7 @@ const AmbulancePage = () => {
                 try {
                     const token = localStorage.getItem('token');
                     const incidentResponse = await fetch(
-                        `http://localhost:5050/api/dispatch/ambulances/${selectedAmbulance}/active`,
+                        `${API_BASE_URL}/api/dispatch/ambulances/${selectedAmbulance}/active`,
                         { headers: { 'Authorization': `Bearer ${token}` } }
                     );
                     if (incidentResponse.ok) {

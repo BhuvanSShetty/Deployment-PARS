@@ -4,6 +4,9 @@ import io from 'socket.io-client';
 import { calculateDistance, calculateETA, formatDistance, HOSPITAL_LOCATION } from '../utils/locationUtils.js';
 import '../styles/HospitalPage.css';
 
+const API_BASE_URL = import.meta.env.VITE_API_BASE_URL || 'http://localhost:5050';
+const SOCKET_URL = import.meta.env.VITE_SOCKET_URL || API_BASE_URL;
+
 const HospitalPage = () => {
     const { t } = useTranslation();
     const [patients, setPatients] = useState([]);
@@ -21,7 +24,7 @@ const HospitalPage = () => {
         const fetchPatients = async () => {
             try {
                 const token = localStorage.getItem('token');
-                const response = await fetch('http://localhost:5050/api/patients/hospital', {
+                const response = await fetch(`${API_BASE_URL}/api/patients/hospital`, {
                     headers: { 'Authorization': `Bearer ${token}` }
                 });
                 if (response.ok) {
@@ -39,7 +42,7 @@ const HospitalPage = () => {
     }, []);
 
     useEffect(() => {
-        const newSocket = io('http://localhost:5050', {
+        const newSocket = io(SOCKET_URL, {
             reconnection: true,
             reconnectionDelay: 1000,
             reconnectionDelayMax: 5000,

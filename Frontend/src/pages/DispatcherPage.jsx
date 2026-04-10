@@ -4,6 +4,9 @@ import io from 'socket.io-client';
 import LiveMap from '../components/LiveMap';
 import '../styles/DispatcherPage.css';
 
+const API_BASE_URL = import.meta.env.VITE_API_BASE_URL || 'http://localhost:5050';
+const SOCKET_URL = import.meta.env.VITE_SOCKET_URL || API_BASE_URL;
+
 /* ─── ChainCare Dispatcher styles (ported 1:1 from dispatcher_full_window.html) ─── */
 const S = `
 :root {
@@ -134,7 +137,7 @@ const DispatcherPage = () => {
 
   /* ── WebSocket ── */
   useEffect(() => {
-    const sock = io('http://localhost:5050');
+    const sock = io(SOCKET_URL);
     sock.on('connect',    () => setConnectionStatus('Connected'));
     sock.on('disconnect', () => setConnectionStatus('Disconnected'));
     sock.on('incidentStatusUpdate', inc =>
@@ -151,11 +154,11 @@ const DispatcherPage = () => {
     const load = async () => {
       const token = localStorage.getItem('token');
       try {
-        const r = await fetch('http://localhost:5050/api/dispatch/queue', { headers: { Authorization: `Bearer ${token}` } });
+        const r = await fetch(`${API_BASE_URL}/api/dispatch/queue`, { headers: { Authorization: `Bearer ${token}` } });
         if (r.ok) setIncidents(await r.json()); else setError('Failed to load queue');
       } catch { setError('Failed to load queue'); }
       try {
-        const r = await fetch('http://localhost:5050/api/ambulances/available');
+        const r = await fetch(`${API_BASE_URL}/api/ambulances/available`);
         if (r.ok) setAmbulances(await r.json());
       } catch {}
     };
@@ -168,7 +171,7 @@ const DispatcherPage = () => {
   const fetchFRs = async (lat, lng, radius = 1000) => {
     const token = localStorage.getItem('token');
     try {
-      const r = await fetch('http://localhost:5050/api/dispatch/check-first-responders', {
+      const r = await fetch(`${API_BASE_URL}/api/dispatch/check-first-responders`, {
         method: 'POST',
         headers: { 'Content-Type': 'application/json', Authorization: `Bearer ${token}` },
         body: JSON.stringify({ lat, lng, radius })
@@ -181,7 +184,7 @@ const DispatcherPage = () => {
     setError('');
     const token = localStorage.getItem('token');
     try {
-      const r = await fetch('http://localhost:5050/api/dispatch/assign', {
+      const r = await fetch(`${API_BASE_URL}/api/dispatch/assign`, {
         method: 'POST',
         headers: { 'Content-Type': 'application/json', Authorization: `Bearer ${token}` },
         body: JSON.stringify({ incidentId, ...formState })
@@ -453,7 +456,7 @@ const NewCasePanel = ({ incident, ambulances, onAssign, onSwitchToFR }) => {
       (async () => {
         const token = localStorage.getItem('token');
         try {
-          const r = await fetch('http://localhost:5050/api/dispatch/check-first-responders', {
+          const r = await fetch(`${API_BASE_URL}/api/dispatch/check-first-responders`, {
             method: 'POST',
             headers: { 'Content-Type': 'application/json', Authorization: `Bearer ${token}` },
             body: JSON.stringify({ lat: incident.location.lat, lng: incident.location.lng, radius: 1000 })

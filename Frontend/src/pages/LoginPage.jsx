@@ -3,6 +3,8 @@ import { useTranslation } from 'react-i18next';
 import { useNavigate } from 'react-router-dom';
 import '../styles/LoginPage.css';
 
+const API_BASE_URL = import.meta.env.VITE_API_BASE_URL || 'http://localhost:5050';
+
 const LoginPage = ({ onLoginSuccess }) => {
     const { t } = useTranslation();
     const [email, setEmail] = useState('');
@@ -17,7 +19,7 @@ const LoginPage = ({ onLoginSuccess }) => {
         setLoading(true);
 
         try {
-            const response = await fetch('http://localhost:5050/api/auth/login', {
+            const response = await fetch(`${API_BASE_URL}/api/auth/login`, {
                 method: 'POST',
                 headers: {
                     'Content-Type': 'application/json'

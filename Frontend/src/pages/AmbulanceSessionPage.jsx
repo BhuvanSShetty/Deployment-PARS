@@ -3,6 +3,9 @@ import { useLocation, useNavigate } from 'react-router-dom';
 import io from 'socket.io-client';
 import '../styles/AmbulanceSessionPage.css';
 
+const API_BASE_URL = import.meta.env.VITE_API_BASE_URL || 'http://localhost:5050';
+const SOCKET_URL = import.meta.env.VITE_SOCKET_URL || API_BASE_URL;
+
 const AmbulanceSessionPage = () => {
     const location = useLocation();
     const navigate = useNavigate();
@@ -25,7 +28,7 @@ const AmbulanceSessionPage = () => {
             return;
         }
 
-        const newSocket = io('http://localhost:5050', {
+        const newSocket = io(SOCKET_URL, {
             reconnection: true,
             reconnectionDelay: 1000
         });
@@ -95,7 +98,7 @@ const AmbulanceSessionPage = () => {
 
         try {
             const token = localStorage.getItem('token');
-            const response = await fetch(`http://localhost:5050/api/dispatch/incidents/${incidentId}/status`, {
+            const response = await fetch(`${API_BASE_URL}/api/dispatch/incidents/${incidentId}/status`, {
                 method: 'PATCH',
                 headers: {
                     'Content-Type': 'application/json',
@@ -125,7 +128,7 @@ const AmbulanceSessionPage = () => {
 
         try {
             const token = localStorage.getItem('token');
-            const response = await fetch(`http://localhost:5050/api/dispatch/incidents/${incidentId}/hospital`, {
+            const response = await fetch(`${API_BASE_URL}/api/dispatch/incidents/${incidentId}/hospital`, {
                 method: 'PATCH',
                 headers: {
                     'Content-Type': 'application/json',

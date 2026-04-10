@@ -1,6 +1,8 @@
 import { useState } from 'react';
 import '../styles/AdminRegisterPage.css';
 
+const API_BASE_URL = import.meta.env.VITE_API_BASE_URL || 'http://localhost:5050';
+
 const AdminAmbulanceRegisterPage = () => {
     const [formData, setFormData] = useState({
         ambulance: {
@@ -42,7 +44,7 @@ const AdminAmbulanceRegisterPage = () => {
 
         try {
             const token = localStorage.getItem('token');
-            const response = await fetch('http://localhost:5050/api/admin/ambulances/register', {
+            const response = await fetch(`${API_BASE_URL}/api/admin/ambulances/register`, {
                 method: 'POST',
                 headers: {
                     'Content-Type': 'application/json',
