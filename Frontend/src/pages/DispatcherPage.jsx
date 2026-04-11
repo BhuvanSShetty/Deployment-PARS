@@ -538,19 +538,6 @@ const NewCasePanel = ({ incident, ambulances, onAssign, onSwitchToFR }) => {
         </div>
       )}
 
-      <div className="cc-disp-box">
-        <div className="cc-db-title">Dispatch recommendation</div>
-        <div className="cc-db-row">
-          <span className="cc-db-label">Ambulance</span>
-          <span className="cc-db-val" style={{ color: '#185FA5' }}>
-            {bestAmb ? `${bestAmb.ambulanceId} (${bestAmb.serviceLevel})` : 'KA-01-AB-1234 (ALS)'}
-          </span>
-        </div>
-        <div className="cc-db-row"><span className="cc-db-label">Hospital</span><span className="cc-db-val">Fortis Bannerghatta</span></div>
-        <div className="cc-db-row"><span className="cc-db-label">ETA to patient</span><span className="cc-db-val">8 min</span></div>
-        <div className="cc-db-row"><span className="cc-db-label">ETA to hospital</span><span className="cc-db-val">11 min</span></div>
-      </div>
-
       {/* ── Purple FR banner — appears automatically ── */}
       {critical && nearbyFRs.length > 0 && (
         <div className="cc-alert cc-al-p">
